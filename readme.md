@@ -182,6 +182,20 @@ Contains the native whisper.cpp library with Vulkan support enabled.
 
 - Windows x64
 
+### Whisper.net.Runtime.VitisAI
+
+Contains the native whisper.cpp library with AMD Vitis AI support enabled.
+
+#### Pre-requisites
+
+- Everything from Whisper.net.Runtime pre-requisites
+- AMD device with Vitis AI support
+- [Vitis AI Setup](https://github.com/Xilinx/Vitis-AI)
+
+#### Supported Platforms
+
+- Windows x64
+
 ## Multiple Runtimes Support
 
 You can install and use multiple runtimes in the same project. The runtime will be automatically selected based on the platform you are running the application on and the availability of the native runtime.
@@ -191,10 +205,11 @@ The following order of priority will be used by default:
 1. `Whisper.net.Runtime.Cuda` (NVidia devices with CUDA 13 drivers installed)
 2. `Whisper.net.Runtime.Cuda12` (NVidia devices with CUDA 12 drivers installed)
 3. `Whisper.net.Runtime.Vulkan` (Windows x64 with Vulkan installed)
-4. `Whisper.net.Runtime.CoreML` (Apple devices)
-5. `Whisper.net.Runtime.OpenVino` (Intel devices)
-6. `Whisper.net.Runtime` (CPU inference)
-7. `Whisper.net.Runtime.NoAvx` (CPU inference without AVX support)
+4. `Whisper.net.Runtime.VitisAI` (AMD devices with Vitis AI support)
+5. `Whisper.net.Runtime.CoreML` (Apple devices)
+6. `Whisper.net.Runtime.OpenVino` (Intel devices)
+7. `Whisper.net.Runtime` (CPU inference)
+8. `Whisper.net.Runtime.NoAvx` (CPU inference without AVX support)
 
 The loader automatically probes the CUDA runtimes in this order and validates the installed driver via `cudaRuntimeGetVersion`, so machines with only CUDA 12 drivers will transparently fall back to `Whisper.net.Runtime.Cuda12`.
 

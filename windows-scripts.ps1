@@ -37,7 +37,8 @@ function BuildWindows() {
         [Parameter(Mandatory = $false)] [bool]$OpenVino = $false,
         [Parameter(Mandatory = $false)] [bool]$NoAvx = $false,
         [Parameter(Mandatory = $false)] [string]$Configuration = "Release",
-        [Parameter(Mandatory = $false)] [string]$CudaVersion = "13"
+        [Parameter(Mandatory = $false)] [string]$CudaVersion = "13",
+        [Parameter(Mandatory = $false)] [bool]$Vitis = $false
     )
 
     # Ensure the build directory exists
@@ -105,6 +106,12 @@ function BuildWindows() {
         $runtimePath += ".OpenVino"
     }
 
+    if($Vitis) {
+        Write-Host "Vitis AI Enabled"
+        $options += "-DWHISPER_VITISAI=1"
+        $buildDirectory += "-vitisai"
+        $runtimePath += ".VitisAI.Windows"
+    }
 
     # Specify the out-of-source build directory
     $options += "-B"
@@ -194,6 +201,7 @@ function BuildWindowsAll([Parameter(Mandatory = $false)] [string]$Configuration 
     BuildWindows -Arch "x64"   -Cuda $true    -Configuration $Configuration -CudaVersion "12"
     BuildWindows -Arch "x64"   -Configuration $Configuration
     BuildWindows -Arch "x86"   -Configuration $Configuration
+    BuildWindows -Arch "x64"   -Vitis $true -Configuration $Configuration
 }
 
 function PackAll([Parameter(Mandatory = $true)] [string]$Version) {
@@ -215,5 +223,6 @@ function PackAll([Parameter(Mandatory = $true)] [string]$Version) {
     nuget pack runtimes/Whisper.net.Runtime.Vulkan.nuspec -Version $Version -OutputDirectory ./nupkgs
     nuget pack runtimes/Whisper.net.Runtime.OpenVino.nuspec -Version $Version -OutputDirectory ./nupkgs
     nuget pack runtimes/Whisper.net.Runtime.NoAvx.nuspec -Version $Version -OutputDirectory ./nupkgs
+    nuget pack runtimes/Whisper.net.Runtime.VitisAI.Windows.nuspec -Version $Version -OutputDirectory ./nupkgs
     nuget pack runtimes/Whisper.net.AllRuntimes.nuspec -Version $Version -OutputDirectory ./nupkgs
 }

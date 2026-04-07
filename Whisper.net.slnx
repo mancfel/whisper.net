@@ -66,6 +66,8 @@
     <File Path="runtimes/Whisper.net.Runtime.nuspec" />
     <File Path="runtimes/Whisper.net.Runtime.OpenVino.nuspec" />
     <File Path="runtimes/Whisper.net.Runtime.OpenVino/Whisper.net.Runtime.OpenVino.targets" />
+    <File Path="runtimes/Whisper.net.Runtime.VitisAI.Windows.nuspec" />
+    <File Path="runtimes/Whisper.net.Runtime.VitisAI.Windows/Whisper.net.Runtime.VitisAI.Windows.targets" />
     <File Path="runtimes/Whisper.net.Runtime.Vulkan.nuspec" />
     <File Path="runtimes/Whisper.net.Runtime.Vulkan/Whisper.net.Runtime.Vulkan.targets" />
     <File Path="runtimes/Whisper.net.Runtime/Whisper.net.Runtime.targets" />

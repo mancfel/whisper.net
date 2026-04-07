@@ -10,5 +10,6 @@ public enum RuntimeLibrary
     Vulkan,
     CoreML,
     OpenVino,
-    CpuNoAvx
+    CpuNoAvx,
+    VitisAI
 }

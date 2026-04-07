@@ -42,6 +42,7 @@ public static class NativeLibraryLoader
 
     private static readonly string[] dependencyOrder =
     [
+        "flexmlrt",
         "ggml-base-whisper",
         "ggml-cpu-whisper",
         "ggml-blas-whisper",
@@ -205,6 +206,12 @@ public static class NativeLibraryLoader
             return false;
         }
 #endif
+        // If Vitis AI is not available, we can't use Vitis AI runtime.
+        if (runtime == RuntimeLibrary.VitisAI && !VitisAIHelper.IsVitisAIAvailable(platform, architecture))
+        {
+            return false;
+        }
+
         // If Cuda is not available, we can't use Cuda runtime (unless there is no other runtime available, where CUDA runtime can be used as a fallback to the CPU)
         if (IsCudaRuntime(runtime) && !CudaHelper.IsCudaAvailable(runtime))
         {
@@ -258,6 +265,7 @@ public static class NativeLibraryLoader
                     RuntimeLibrary.CpuNoAvx => Path.Combine(runtimesPath, "noavx", $"{platform}-{architecture}"),
                     RuntimeLibrary.CoreML => Path.Combine(runtimesPath, "coreml", $"{platform}-{architecture}"),
                     RuntimeLibrary.OpenVino => Path.Combine(runtimesPath, "openvino", $"{platform}-{architecture}"),
+                    RuntimeLibrary.VitisAI => Path.Combine(runtimesPath, "vitisai", $"{platform}-{architecture}"),
                     _ => throw new InvalidOperationException("Unknown runtime library")
                 };
                 WhisperLogger.Log(WhisperLogLevel.Debug, $"Searching for runtime directory {library} in {runtimePath}");
